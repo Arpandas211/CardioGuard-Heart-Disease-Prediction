@@ -44,67 +44,130 @@ if page == "Prediction":
     st.title("❤️ CardioGuard ")
     st.subheader("Heart Disease Prediction System")
 
-    
     age = st.number_input("Age", 1, 100, 40)
-    gender_option =st.selectbox("Gender",["Male", "Female"])
-    gender = 1 if gender_option =="Male" else 0
-    chestpain = st.selectbox("Chest Pain Type", [0, 1, 2, 3])
-    restingBP = st.number_input("Resting BP", 50, 250, 120)
-    serumcholestrol = st.number_input("Serum Cholesterol", 0, 600, 200)
-    fastingbloodsugar = st.selectbox("Fasting Blood Sugar", [0, 1])
-    restingrelectro = st.selectbox("Resting ECG", [0, 1, 2])
-    maxheartrate = st.number_input("Max Heart Rate", 50, 250, 150)
-    exerciseangia = st.selectbox("Exercise Angina", [0, 1])
-    oldpeak = st.number_input("Old Peak", 0.0, 10.0, 1.0)
-    slope = st.selectbox("Slope", [0, 1, 2])
-    noofmajorvessels = st.selectbox("No. of Major Vessels", [0, 1, 2, 3])
-if st.button("Predict"):
 
-    input_data = pd.DataFrame([[
-        
-        age,
-        gender,
-        chestpain,
-        restingBP,
-        serumcholestrol,
-        fastingbloodsugar,
-        restingrelectro,
-        maxheartrate,
-        exerciseangia,
-        oldpeak,
-        slope,
-        noofmajorvessels
-    ]])
+    gender_option = st.selectbox(
+        "Gender",
+        ["Male", "Female"]
+    )
+    gender = 1 if gender_option == "Male" else 0
 
-    prediction = model.predict(input_data)
+    chestpain = st.selectbox(
+        "Chest Pain Type",
+        [0, 1, 2, 3]
+    )
 
-    
+    restingBP = st.number_input(
+        "Resting BP",
+        50, 250, 120
+    )
 
-    probability = model.predict_proba(input_data)[0][1] * 100
+    serumcholestrol = st.number_input(
+        "Serum Cholesterol",
+        0, 600, 200
+    )
 
-    st.metric("Heart Disease Risk", f"{probability:.2f}%")
+    fastingbloodsugar = st.selectbox(
+        "Fasting Blood Sugar",
+        [0, 1]
+    )
 
-    health_score = 100 - probability
+    restingrelectro = st.selectbox(
+        "Resting ECG",
+        [0, 1, 2]
+    )
 
-    st.metric("Heart Health Score", f"{health_score:.0f}/100")
+    maxheartrate = st.number_input(
+        "Max Heart Rate",
+        50, 250, 150
+    )
 
-    if prediction[0] == 1:
+    exerciseangia = st.selectbox(
+        "Exercise Angina",
+        [0, 1]
+    )
 
-        st.error("⚠ High Risk of Heart Disease")
+    oldpeak = st.number_input(
+        "Old Peak",
+        0.0, 10.0, 1.0
+    )
 
-        st.subheader("Recommendations")
+    slope = st.selectbox(
+        "Slope",
+        [0, 1, 2]
+    )
 
-        st.write("• Exercise 30 minutes daily")
-        st.write("• Eat healthy food")
-        st.write("• Avoid smoking")
-        st.write("• Reduce cholesterol")
-        st.write("• Consult a cardiologist")
+    noofmajorvessels = st.selectbox(
+        "No. of Major Vessels",
+        [0, 1, 2, 3]
+    )
 
-    else:
+    if st.button("Predict"):
 
-        st.success("✅ Low Risk of Heart Disease")
+        input_data = pd.DataFrame([[
+            age,
+            gender,
+            chestpain,
+            restingBP,
+            serumcholestrol,
+            fastingbloodsugar,
+            restingrelectro,
+            maxheartrate,
+            exerciseangia,
+            oldpeak,
+            slope,
+            noofmajorvessels
+        ]])
 
-    report = f"""
+        prediction = model.predict(input_data)
+
+        probability = model.predict_proba(input_data)[0][1] * 100
+
+        st.metric(
+            "Heart Disease Risk",
+            f"{probability:.2f}%"
+        )
+
+        health_score = 100 - probability
+
+        st.metric(
+            "Heart Health Score",
+            f"{health_score:.0f}/100"
+        )
+
+        if prediction[0] == 1:
+
+            st.error(
+                "⚠ High Risk of Heart Disease"
+            )
+
+            st.subheader(
+                "Recommendations"
+            )
+
+            st.write(
+                "• Exercise 30 minutes daily"
+            )
+            st.write(
+                "• Eat healthy food"
+            )
+            st.write(
+                "• Avoid smoking"
+            )
+            st.write(
+                "• Reduce cholesterol"
+            )
+            st.write(
+                "• Consult a cardiologist"
+            )
+
+        else:
+
+            st.success(
+                "✅ Low Risk of Heart Disease"
+            )
+
+        report = f"""
 CARDIOGUARD REPORT
 
 Risk Percentage: {probability:.2f}%
@@ -115,11 +178,11 @@ Prediction:
 {'High Risk' if prediction[0] == 1 else 'Low Risk'}
 """
 
-    st.download_button(
-        "📥 Download Report",
-        report,
-        file_name="heart_report.txt"
-    )
+        st.download_button(
+            "📥 Download Report",
+            report,
+            file_name="heart_report.txt"
+        )
 
 
 
