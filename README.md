@@ -14,7 +14,7 @@ The objective of this project is to build an accurate and reliable heart disease
 - Heart disease risk prediction
 - User-friendly interface for prediction
 
-## 🛠 Technologies Used
+##  Technologies Used
 - Python
 - Pandas
 - NumPy
